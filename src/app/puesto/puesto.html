@@ -1,0 +1,88 @@
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-start mb-3">
+
+        <h3>Puesto {{ puesto?.name }}</h3>
+
+        @let account = account$ | async;
+        @if (account) {
+        <div class="card shadow-sm" style="width: 280px;">
+            <div class="card-body">
+                <p class="mb-1">
+                    <strong>Número cuenta:</strong><br>
+                    {{ account.number }}
+                </p>
+                <p class="mb-2">
+                    <strong>Saldo:</strong><br>
+                    @if (showBalance) {
+                    <span>S/ {{ account.balance | number:'1.2-2' }}</span>
+                    } @else {
+                    <span>S/ ******</span>
+                    }
+                    <button class="btn btn-sm btn-link p-0 ms-2" (click)="toggleBalance()">
+                        <i class="bi" [ngClass]="showBalance ? 'bi-eye-slash' : 'bi-eye'">
+                        </i>
+                    </button>
+                </p>
+            </div>
+        </div>
+        }
+    </div>
+
+    <button class="btn btn-warning btn-sm mb-3" (click)="goToDeudas()">
+        Deudas
+    </button>
+
+    <h4>Transacciones</h4>
+
+    @let transactions = transactions$ | async;
+
+    @if (transactions === null || transactions === undefined) {
+    <div class="text-center mt-4">
+        <div class="spinner-border text-primary"></div>
+        <p>Cargando transacciones...</p>
+    </div>
+    }
+
+    @else {
+
+    @if (transactions.length === 0) {
+    <div class="alert alert-info mt-3">
+        No hay transacciones para este puesto.
+    </div>
+    }
+
+    @else {
+    <table class="table table-striped mt-3 shadow-sm">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Fecha</th>
+                <th>Descripción</th>
+                <th>Tipo</th>
+                <th>Monto</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (t of transactions; track t.id) {
+            <tr>
+                <td>{{ t.date }}</td>
+                <td>{{ t.description }}</td>
+                <td>
+                    <span class="badge" [ngClass]="{
+                    'bg-success': t.type === 'INCOME',
+                    'bg-danger': t.type === 'EXPENSE'
+                  }">
+                        {{ TransactionTypeLabel[t.type] }}
+                    </span>
+                </td>
+                <td class="text-center">S/ {{ t.amount | number:'1.2-2' }}</td>
+            </tr>
+            }
+        </tbody>
+
+    </table>
+    }
+    }
+</div>

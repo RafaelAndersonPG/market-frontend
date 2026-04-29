@@ -1,0 +1,58 @@
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">Cargos</h3>
+
+        <button class="btn btn-success" (click)="createCharge()">
+            + Crear
+        </button>
+    </div>
+
+    @let charges = charges$ | async;
+
+    @if (charges === null || charges === undefined) {
+    <div class="text-center mt-4">
+        <div class="spinner-border text-primary"></div>
+        <p>Cargando cargos...</p>
+    </div>
+    }
+
+    @else {
+    @if (charges.length === 0) {
+    <div class="alert alert-info mt-3">
+        No hay cargos.
+    </div>
+    }
+
+    @else {
+    <table class="table table-striped mt-3 shadow-sm">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (c of charges; track c.id) {
+            <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.description }}</td>
+                <td class="text-center">
+                    <button class="btn btn-warning btn-sm me-1" (click)="editCharge(c)">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-sm" (click)="deleteCharge(c.id)">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+
+    </table>
+    }
+    }
+</div>

@@ -1,0 +1,42 @@
+<div class="container mt-4">
+  <h2>Puestos</h2>
+
+  @let puestos = puestos$ | async;
+
+  @if (puestos === null || puestos === undefined) {
+    <div class="text-center mt-4">
+      <div class="spinner-border text-primary"></div>
+      <p>Cargando puestos...</p>
+    </div>
+  }
+
+  @else {
+    @if (puestos.length === 0) {
+      <div class="alert alert-info">
+        No hay puestos disponibles para mostrar.
+      </div>
+    }
+
+    @else {
+      <div class="list-group shadow-sm">
+
+        @for (puesto of puestos; track puesto.id) {
+          <button 
+            type="button"
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            (click)="seleccionarPuesto(puesto)">
+
+            <div>
+              <strong>Puesto {{ puesto.name }}</strong>
+              <p class="mb-0 text-muted small">
+                Dueño: {{ puesto.ownerName }}
+              </p>
+            </div>
+
+          </button>
+        }
+
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+
+        <a class="navbar-brand">Market Cibertec</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/dashboard" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }">
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/cargos" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }">
+                        Cargos
+                    </a>
+                </li>
+            </ul>
+            <button class="btn btn-outline-light" (click)="logout()">Salir</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-3">
+    <router-outlet></router-outlet>
+</div>
