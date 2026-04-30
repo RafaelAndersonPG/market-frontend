@@ -8,7 +8,6 @@ import { Debts } from './debts/debts';
 import { Charge } from './charge/charge';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
   {
     path: '',
@@ -22,5 +21,6 @@ export const routes: Routes = [
       { path: 'cargos', component: Charge, canActivate: [authGuard] },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
-  }
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];

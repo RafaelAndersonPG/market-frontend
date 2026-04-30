@@ -31,7 +31,7 @@ export class Debts implements OnInit {
   charges$!: Observable<any[]>;
 
   ngOnInit(): void {
-    this.account = this.puesto = history.state.account;
+    this.account = history.state.account;
     this.puesto = history.state.puesto;
 
     if (!this.puesto || !this.account) {
@@ -39,6 +39,9 @@ export class Debts implements OnInit {
       return;
     }
 
+    console.log(this.account);
+    console.log(this.puesto);
+    
     this.loadCharges();
     this.loadDebts();
   }
