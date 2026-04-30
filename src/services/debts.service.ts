@@ -18,4 +18,10 @@ export class DebtsService {
       })
     );
   }
+
+  createDebt(debt: any): Observable<any> {
+    return this.http.post(`${this.API_URL}`, debt).pipe(
+      tap(data => console.log('Deuda creada:', data))
+    );
+  }
 }

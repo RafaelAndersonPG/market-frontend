@@ -1,1 +1,66 @@
-<p>debts works!</p>
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">Deudas del puesto {{ puesto?.name }}</h3>
+        <div>
+            <button class="btn btn-success me-2" (click)="createDebt()">
+                + Nueva deuda
+            </button>
+            <button class="btn btn-secondary" (click)="back()">
+                Volver
+            </button>
+        </div>
+    </div>
+
+    @let debts = debts$ | async;
+    @if (debts === null || debts === undefined) {
+    <div class="text-center mt-4">
+        <div class="spinner-border text-primary"></div>
+        <p>Cargando deudas...</p>
+    </div>
+    } @else {
+
+    @if (debts.length === 0) {
+    <div class="alert alert-info mt-3">
+        No hay deudas registradas para este puesto.
+    </div>
+    } @else {
+
+    <table class="table table-striped table-hover shadow-sm mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Cargo</th>
+                <th>Periodo</th>
+                <th>Monto</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (d of debts; track d.id) {
+            <tr>
+                <td>{{ d.chargeName }}</td>
+                <td>{{ d.period }}</td>
+                <td>S/ {{ d.amount | number:'1.2-2' }}</td>
+                <td>
+                    <span class="badge" [ngClass]="d.paid ? 'bg-success' : 'bg-danger'">
+                        {{ d.paid ? 'Pagado' : 'Pendiente' }}
+                    </span>
+                </td>
+                <td class="text-center">
+                    @if (!d.paid) {
+                    <button class="btn btn-sm btn-success" (click)="payDebt(d)">
+                        Pagar
+                    </button>
+                    } @else {
+                    <span class="text-muted">—</span>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    }
+    }
+</div>

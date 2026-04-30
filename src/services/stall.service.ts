@@ -12,10 +12,18 @@ export class StallService {
   private readonly API_URL = `${environment.apiUrl}api/puesto`;
 
   getAll(): Observable<PuestoDto[]> {
-    return this.http.get<PuestoDto[]>(this.API_URL).pipe(
-      tap(data => {
-        console.log('Puestos: ', data);
-      })
-    );
+    return this.http.get<PuestoDto[]>(this.API_URL);
+  }
+
+  create(data: any): Observable<PuestoDto> {
+    return this.http.post<PuestoDto>(this.API_URL, data);
+  }
+
+  update(id: number, data: any): Observable<PuestoDto> {
+    return this.http.put<PuestoDto>(`${this.API_URL}/${id}`, data);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.API_URL}/${id}`);
   }
 }

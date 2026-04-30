@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment.development';
 import { Observable, tap } from 'rxjs';
 import { TransactionDto } from '../app/shared/dto/TransactionDto';
+import { TransactionRequestDto } from '../app/shared/dto/TransactionRequestDto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class TransactionService {
       tap(data => {
         console.log('Transacciones: ', data);
       })
+    );
+  }
+
+  createTransaction(data: TransactionRequestDto): Observable<void> {
+    return this.http.post<void>(`${this.API_URL}`, data).pipe(
+      tap(() => console.log('Transacción creada'))
     );
   }
 }
