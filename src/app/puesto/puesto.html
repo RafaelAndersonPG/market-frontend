@@ -33,6 +33,10 @@
         Deudas
     </button>
 
+    <button class="btn btn-success btn-sm mb-3 mx-3" (click)="createIncome()">
+        + Ingreso
+    </button>
+
     <h4>Transacciones</h4>
 
     @let transactions = transactions$ | async;
